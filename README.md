@@ -48,7 +48,7 @@ Run checks from the repository root in the documented environment:
 python -m unittest discover -s tests -v
 ```
 
-Tests generate minimal inputs in temporary directories. A Linux GitHub Actions workflow is included. Local component tests have passed; the Linux Conda setup and full pipeline still require validation on Linux. No CI success or biological validation is claimed by this preparation.
+Tests generate minimal inputs in temporary directories. On 2026-09-24, [Linux checks](https://github.com/luckingclark/glori-amplicon/actions/runs/35950393337) passed on Ubuntu 24.04 with the documented Conda environment: dependency and command-line checks succeeded, and all 12 tests passed, including full pipeline checks. This verifies software execution on the test inputs, not biological accuracy or performance on every dataset.
 
 For help, open an issue with software versions, the failed step and a command/error message with private paths and study identifiers removed. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
