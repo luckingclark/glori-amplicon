@@ -1,6 +1,6 @@
 # GLORI Amplicon
 
-A command-line workflow for researchers analyzing **targeted amplicon m6A sequencing with GLORI**. Starting from your reads and original amplicon sequences, it produces an aligned BAM, estimated A-to-G conversion rates, and a filtered table of candidate m6A sites with A-retention ratios.
+Analyze **targeted amplicon m6A sequencing with GLORI**, from your FASTQ reads and original amplicon sequences to an aligned BAM, conversion-rate estimates, and a filtered table of candidate m6A sites. This command-line workflow is for researchers working with a small set of custom amplicon references.
 
 This is an independent, unofficial adaptation of [GLORI-tools](https://github.com/liucongcas/GLORI-tools). It uses the upstream conversion, alignment and site-calling approach; it is not an official GLORI release or a new detection method.
 
@@ -16,16 +16,16 @@ This is an independent, unofficial adaptation of [GLORI-tools](https://github.co
 | FASTQ (`.fq`, `.fastq`, or gzip-compressed with `.gz`) | Four-line records with Phred+33 qualities; unique read identifiers before the first whitespace; one selected read end |
 | Original FASTA (`.fa` or `.fasta`, uncompressed) | Complete target amplicon sequences in original RNA 5'-to-3' orientation, with T for U and original A bases preserved; not merely two primers or a consensus of converted reads |
 
-FASTA records must use `A/C/G/T/N`, contain at least one A each, and have unique IDs starting with a letter or digit and containing only letters, digits, underscores, dots or hyphens. IDs must not contain `_AG_converted`. Exclude sequencing adapters from the reference. Quantified sites should lie outside primer-derived regions; the software does not mask these automatically. A whole-genome reference or GTF is not needed.
+Use original, unconverted `A/C/G/T/N` reference sequences with unique IDs and at least one A per record. Exclude sequencing adapters. Quantified sites should lie outside primer-derived regions, which the software does not mask automatically. Check the detailed ID and sequence rules in the input requirements below. No whole-genome reference or GTF is needed.
 
-Read the full input requirements before preparing a reference:
+**First time here?** Read the input requirements, then use the guide in your preferred language for explanations of each command. The quick start below follows the same workflow.
 
 | Documentation | English | Chinese version |
 |---|---|---|
 | Installation, Slurm and step-by-step analysis | [User guide](docs/usage.en.md) | [User guide in Chinese](docs/usage.zh-CN.md) |
 | File formats and reference design | [Input requirements](docs/inputs.en.md) | [Input requirements in Chinese](docs/inputs.zh-CN.md) |
 
-## Install
+## 1. Install the environment
 
 Download the repository using **Code > Download ZIP**, extract it, and transfer the complete code directory to Linux. Keep `pipelines/` alongside the two entry-point scripts. Access to a private repository requires GitHub authorization.
 
@@ -44,13 +44,13 @@ The two Python commands should display usage information and exit successfully. 
 
 [environment.yml](environment.yml) specifies Python 3.10, Bowtie **1.3.1**, SAMtools, Trim Galore **0.6.10**, Cutadapt 4.x, SeqKit, FastQC, Biopython, pysam, NumPy, pandas, SciPy and statsmodels. Bowtie2 is not a substitute. The file is a dependency specification, not an exact build lockfile; installed builds can differ between systems.
 
-## Minimal analysis with your own data
+## 2. Run one sample
 
 This example is a complete command sequence **after you supply the inputs**; it is not a bundled demonstration dataset. It assumes standard Illumina sequencing adapters and uses `sample1_R1.fq.gz` as the input filename. Match the adapter option to your library; if your filename differs, also update the trimmed filename below.
 
 Replace the code, input and analysis paths with your own. Use a new sample working directory outside the code directory, activate the environment, and run each step in order. Stop and resolve any error before continuing.
 
-### 1. Prepare the working directory and trim reads
+### Prepare the working directory and trim reads
 
 ```bash
 conda activate glori_amplicon
@@ -68,7 +68,7 @@ fastqc -t 2 -o qc trimmed/sample1_R1_trimmed.fq
 
 `gzip -t` should exit successfully without output. After trimming, `seqkit stats` should report nonzero reads. Review the FastQC HTML in `qc/`. The trimming example discards reads shorter than 25 nt; reassess this for shorter targets. High duplication is expected for many amplicon designs and is not a reason to deduplicate non-UMI reads by sequence or coordinates.
 
-### 2. Build the reference and run analysis
+### Build the reference and run analysis
 
 Stay in the sample working directory:
 
@@ -85,11 +85,11 @@ python /path/to/your/glori-amplicon/run_GLORI_amplicon.py \
 
 The reference builder creates the converted FASTA, Bowtie indexes, annotation and FASTA indexes; it also writes `reference.fa.fai` beside the original reference. `-f` takes the converted reference, while `-f2` takes the original. The main script locates `pipelines/` automatically.
 
-`--keep-tmp` retains alignment reports and intermediate counts for inspection. `-T` controls alignment/pileup parallelism; Step 1 is single-process. Sorting uses separate thread and memory settings. These settings are not a guarantee of total memory use. See the [parameter guide](docs/usage.en.md#8-run-the-amplicon-analysis) for filters and resource choices.
+`--keep-tmp` retains alignment reports and intermediate counts. `-T` does not speed up the single-process conversion step; sorting has separate thread/memory settings. See the [parameter guide](docs/usage.en.md#8-run-the-amplicon-analysis) for filters and resource choices.
 
 **For a rerun, use a new or empty result directory**, such as `-o output_retry1`; the program refuses a nonempty directory. The reference builder also refuses to overwrite an existing reference prefix.
 
-## Confirm completion and read the outputs
+## 3. Check the results
 
 A successful main-program run exits with code 0 and prints `GLORI Amplicon Analysis Complete!`. Check the files as well:
 
@@ -112,13 +112,13 @@ head -n 5 output/sample1.totalm6A.FDR.csv
 | `tmp/sample1.sam.output` | Bowtie alignment statistics, retained with `--keep-tmp` |
 | `tmp/sample1.totalformat.txt` | Intermediate site counts, retained with `--keep-tmp` |
 
-The site table contains `Chr`, `Sites`, `Strand`, `Gene`, `CR`, `AGcov`, `Acov`, `Genecov`, `Ratio`, `Pvalue` and `P_adjust`. `Sites` is **1-based on the original amplicon FASTA**, not automatically a genomic coordinate. `Ratio` is `Acov / AGcov`, the observed A-retention proportion under the selected filters.
+In the site table, `Sites` is **1-based on the original amplicon FASTA**, not a genomic coordinate. `Ratio` is `Acov / AGcov`, the observed A-retention proportion under the selected filters; `P_adjust` is the adjusted P value. Full column descriptions are in the [result guide](docs/usage.en.md#9-check-the-results).
 
 **A header-only site table is a valid zero-candidate/zero-passing-site output, not evidence of zero methylation.** Missing sites may fail coverage or other filters. A missing table is an error. See [result interpretation](docs/usage.en.md#9-check-the-results) and [limitations](docs/usage.en.md#11-interpretation-and-limitations).
 
 A retention ratio does not automatically correct incomplete conversion or amplification bias. Without UMIs, reads are not independent RNA molecules. Read A-count/depth filters affect counts, and FDR is calculated over prefiltered candidates. Interpret results with appropriate controls and replicates.
 
-## Validation and feedback
+## Validation
 
 On 2026-09-24, [Linux checks](https://github.com/luckingclark/glori-amplicon/actions/runs/35950393337) passed on Ubuntu 24.04: Conda environment creation, dependency and CLI checks, and all 12 tests, including reference preparation and the core analysis pipeline on temporary test inputs. This does not establish biological accuracy, performance on your dataset, or end-to-end adapter-trimming validation. The subsequent documentation changes leave the tested code and environment unchanged.
 
@@ -131,9 +131,20 @@ python -m unittest discover -s tests -v
 
 Under the documented Linux environment, expect the test summary `Ran 12 tests` followed by `OK`, with no skipped tests. Tests create temporary inputs; they do not require your research data.
 
+## Author, licensing and citation
+
+The amplicon adaptation and documentation are by **PKU-Gaolab, Ming-Ao Lu**. Source code and issue reports are hosted in [luckingclark/glori-amplicon](https://github.com/luckingclark/glori-amplicon).
+
 For a problem report, open a repository issue with versions, the failed step and a command/error message with private paths and study identifiers removed. Do not post confidential data or credentials. For code changes, explain the change, run the checks, and update both language guides when commands or inputs change.
 
-## Citation and provenance
+
+- **Local additions, modifications and documentation:** [MIT License](LICENSE).
+- **Code derived from GLORI-tools:** retain the original [GLORI-tools MIT notice](LICENSES/GLORI-tools-MIT.txt).
+- **Upstream RNA-m5C code:** retain the original [RNA-m5C MIT notice](LICENSES/RNA-m5C-MIT.txt).
+
+Keep applicable copyright and license notices when redistributing the code. [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) describes sources, modification scope and the separation of local and upstream contributions. Upstream attribution does not imply collaboration or endorsement. Separately installed dependencies retain their own licenses; the separately licensed Zenodo companion scripts and paper materials are not bundled.
+
+<a id="citation-and-provenance"></a>
 
 Cite this adaptation using [CITATION.cff](CITATION.cff), together with the repository URL and the commit or release used. Also cite the original methods and software below. Cite GLORI 3.0 when that experimental method applies; software use alone does not identify the wet-lab method.
 
@@ -143,12 +154,5 @@ Cite this adaptation using [CITATION.cff](CITATION.cff), together with the repos
 4. **GLORI-tools**, by Cong Liu and contributors. https://github.com/liucongcas/GLORI-tools . Its upstream software citation points to https://doi.org/10.5281/zenodo.7014168 . This repository is not asserted to be an exact copy of that archived version.
 5. **RNA-m5C**, SYSU-zhanglab and Jianheng Liu. https://github.com/SYSU-zhanglab/RNA-m5C . This is an upstream code source acknowledged by GLORI-tools.
 
-Cite analysis dependencies as appropriate for your work. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for code sources and the scope of local changes.
 
-## License
-
-Original additions, modifications and documentation use the [MIT License](LICENSE). Upstream portions retain their original [GLORI-tools MIT notice](LICENSES/GLORI-tools-MIT.txt) and [RNA-m5C MIT notice](LICENSES/RNA-m5C-MIT.txt). Keep the applicable notices when redistributing the code. Attribution does not imply collaboration with or endorsement by upstream authors. Separately installed dependencies retain their own licenses; Zenodo companion scripts and paper materials are not bundled.
-
-## Author
-
-**PKU-Gaolab, Ming-Ao Lu** — amplicon adaptation and documentation. Repository account: [luckingclark](https://github.com/luckingclark).
+Cite analysis dependencies as appropriate for your work.
