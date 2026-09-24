@@ -1,6 +1,6 @@
 # GLORI Amplicon user guide
 
-[中文](usage.zh-CN.md) | [Repository overview](../README.md) | [Input requirements](inputs.en.md)
+[Chinese version](usage.zh-CN.md) | [Repository overview](../README.md) | [Input requirements](inputs.en.md)
 
 An unofficial amplicon adaptation of [GLORI-tools](https://github.com/liucongcas/GLORI-tools). The original GLORI algorithms and experimental methods are credited to their authors. This repository provides an amplicon reference builder, an adapted analysis entry point, dependencies and a step-by-step guide. It is not an official GLORI release or a new m6A detection method.
 

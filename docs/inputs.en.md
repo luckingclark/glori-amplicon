@@ -1,6 +1,6 @@
 # Input requirements
 
-[中文](inputs.zh-CN.md) | [User guide](usage.en.md) | [Repository overview](../README.md)
+[Chinese version](inputs.zh-CN.md) | [User guide](usage.en.md) | [Repository overview](../README.md)
 
 ## Two required inputs
 
