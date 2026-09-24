@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this amplicon adaptation, cite it and the original methods and software listed in CITATIONS.md. Record the commit or release used."
+message: "If you use this amplicon adaptation, cite it and the original methods and software listed in README.md. Record the commit or release used."
 type: software
 title: "GLORI Amplicon: an unofficial GLORI-tools amplicon adaptation"
 authors:

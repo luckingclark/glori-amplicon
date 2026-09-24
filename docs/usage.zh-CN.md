@@ -4,7 +4,7 @@
 
 An unofficial amplicon adaptation of [GLORI-tools](https://github.com/liucongcas/GLORI-tools). The GLORI algorithms and experimental methods belong to their original authors. This repository provides an amplicon reference builder, an adapted analysis entry point, dependency configuration and a step-by-step guide. It is not an official GLORI release or a new m6A detection method.
 
-本项目基于 GLORI-tools 代码改编，并参考 [GLORI 3.0 配套代码](https://doi.org/10.5281/zenodo.14233421)及 [GLORI 3.0 论文](https://doi.org/10.1038/s41592-025-02680-9)的方法。适合使用少量自定义扩增子参考的单端 GLORI 数据。代码来源、许可证边界和完整引用分别见 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md) 和 [CITATIONS.md](../CITATIONS.md)。
+本项目基于 GLORI-tools 代码改编，并参考 [GLORI 3.0 配套代码](https://doi.org/10.5281/zenodo.14233421)及 [GLORI 3.0 论文](https://doi.org/10.1038/s41592-025-02680-9)的方法。适合使用少量自定义扩增子参考的单端 GLORI 数据。代码来源、许可证边界和完整引用分别见 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md) 和 [README: Citation and provenance](../README.md#citation-and-provenance)。
 
 **仓库不提供实验数据、人工合成示例数据、参考序列或结果表。** 以下流程使用你自己的 FASTQ 和 FASTA。`sample1` 仅是输出名称占位符，不代表真实样品。
 
@@ -53,7 +53,6 @@ glori-amplicon/
 ├── environment.yml
 ├── LICENSE
 ├── LICENSES/
-├── CITATIONS.md
 ├── THIRD_PARTY_NOTICES.md
 ├── prepare_amplicon_ref.py
 ├── run_GLORI_amplicon.py
@@ -338,9 +337,9 @@ conda list --explicit > software_versions.txt
 
 ## 13．引用、许可证与贡献
 
-使用本项目分析数据时，请引用 GLORI-tools、原始 GLORI 论文及与你实验实际使用的方法相对应的 GLORI 3.0 论文/代码记录；完整条目见 [CITATIONS.md](../CITATIONS.md)。本项目的贡献是扩增子适配、兼容与稳健性修正、环境配置和操作文档，不声称发明 GLORI 算法或取得原作者背书。
+使用本项目分析数据时，请引用 GLORI-tools、原始 GLORI 论文及与你实验实际使用的方法相对应的 GLORI 3.0 论文/代码记录；完整条目见 [README: Citation and provenance](../README.md#citation-and-provenance)。本项目的贡献是扩增子适配、兼容与稳健性修正、环境配置和操作文档，不声称发明 GLORI 算法或取得原作者背书。
 
-GLORI-tools 的 MIT 版权及许可全文保留在 [LICENSE](../LICENSE)；相关来源、修改范围和未捆绑的第三方资料见 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md)。本仓库不附带论文 PDF、图版、Zenodo 配套脚本或研究数据。
+GLORI-tools 和 RNA-m5C 的原始 MIT 版权及许可全文保留在 [LICENSES/](../LICENSES/)；[LICENSE](../LICENSE) 适用于本项目的原创新增内容、修改和文档；相关来源、修改范围和未捆绑的第三方资料见 [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md)。本仓库不附带论文 PDF、图版、Zenodo 配套脚本或研究数据。
 
 反馈问题时，请提供软件版本、去掉私人路径和数据标识的命令、错误文本以及发生在哪一步。不要把保密 FASTQ、参考序列或凭据直接贴到公开 issue。
 

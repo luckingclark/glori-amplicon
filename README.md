@@ -50,14 +50,23 @@ python -m unittest discover -s tests -v
 
 Tests generate minimal inputs in temporary directories. On 2026-09-24, [Linux checks](https://github.com/luckingclark/glori-amplicon/actions/runs/35950393337) passed on Ubuntu 24.04 with the documented Conda environment: dependency and command-line checks succeeded, and all 12 tests passed, including full pipeline checks. This verifies software execution on the test inputs, not biological accuracy or performance on every dataset.
 
-For help, open an issue with software versions, the failed step and a command/error message with private paths and study identifiers removed. See [CONTRIBUTING.md](CONTRIBUTING.md).
+For help, open an issue with software versions, the failed step and a command/error message with private paths and study identifiers removed. Do not include confidential data or credentials. For code changes, explain the change, run the checks above, and update both language guides when commands or inputs change.
 
 ## Citation and provenance
 
-Please cite the original [GLORI paper](https://doi.org/10.1038/s41587-022-01487-9) and [GLORI-tools](https://github.com/liucongcas/GLORI-tools), together with the [GLORI 3.0 paper](https://doi.org/10.1038/s41592-025-02680-9) and [companion code](https://doi.org/10.5281/zenodo.14233421) when that experimental method applies. Record the repository URL and commit/release used for this adaptation.
+For this adaptation, cite **PKU-Gaolab, Ming-Ao Lu. GLORI Amplicon**, with the [repository URL](https://github.com/luckingclark/glori-amplicon) and commit or release used. Machine-readable citation information is available in [CITATION.cff](CITATION.cff).
 
-See [CITATIONS.md](CITATIONS.md), [CITATION.cff](CITATION.cff), [AUTHORS.md](AUTHORS.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for references, authorship and modification provenance.
+Please also cite the original methods and software below. Cite GLORI 3.0 when that experimental method applies; using this software alone does not establish which wet-lab method generated the data.
+
+1. Liu, C., Sun, H., Yi, Y., et al. (2023). **Absolute quantification of single-base m6A methylation in the mammalian transcriptome using GLORI.** *Nature Biotechnology*, 41, 355–366. https://doi.org/10.1038/s41587-022-01487-9 . First published online in 2022; the volume year is 2023.
+2. Sun, H., Lu, B., Zhang, Z., et al. (2025). **Mild and ultrafast GLORI enables absolute quantification of m6A methylome from low-input samples.** *Nature Methods*, 22, 1226–1236. https://doi.org/10.1038/s41592-025-02680-9 . Cite this when the GLORI 3.0 experimental method is used; software use alone does not establish which wet-lab method generated a dataset.
+3. Lu, B. (2024). **Codes for “Mild and ultrafast GLORI enables absolute quantification of m6A methylome from low-input samples”.** Zenodo. https://doi.org/10.5281/zenodo.14233421 . This is a separate collection of companion analysis scripts, not a release of this amplicon adaptation.
+4. **GLORI-tools**, by Cong Liu and contributors. https://github.com/liucongcas/GLORI-tools . Its upstream software citation points to https://doi.org/10.5281/zenodo.7014168 . This repository is not asserted to be an exact copy of that archived version.
+5. **RNA-m5C**, SYSU-zhanglab and Jianheng Liu. https://github.com/SYSU-zhanglab/RNA-m5C . This is an upstream code source acknowledged by GLORI-tools.
+
+
+Cite analysis dependencies as appropriate for your work. Code sources and the scope of local changes are described in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## License
 
-[MIT](LICENSE). The original GLORI-tools notice is retained, with an additional notice for modifications and documentation by PKU-Gaolab, Ming-Ao Lu. Original GLORI-tools and RNA-m5C notices are also preserved in [LICENSES/](LICENSES/). Third-party dependency licenses remain applicable. The separately licensed Zenodo companion scripts and paper materials are not bundled.
+Original additions, modifications, and documentation by PKU-Gaolab, Ming-Ao Lu are licensed under the [MIT License](LICENSE). Portions derived from GLORI-tools and RNA-m5C retain their original copyright and MIT license notices in [LICENSES/](LICENSES/); see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for their scope. This independent adaptation does not imply collaboration with or endorsement by the upstream authors. Third-party dependency licenses remain applicable. Zenodo companion scripts and paper materials are not bundled.

@@ -4,7 +4,7 @@
 
 An unofficial amplicon adaptation of [GLORI-tools](https://github.com/liucongcas/GLORI-tools). The original GLORI algorithms and experimental methods are credited to their authors. This repository provides an amplicon reference builder, an adapted analysis entry point, dependencies and a step-by-step guide. It is not an official GLORI release or a new m6A detection method.
 
-The adaptation also references the [GLORI 3.0 companion code](https://doi.org/10.5281/zenodo.14233421) and [GLORI 3.0 paper](https://doi.org/10.1038/s41592-025-02680-9). It is intended for single-end GLORI analysis against a small set of custom amplicons. See [source and license notices](../THIRD_PARTY_NOTICES.md) and [references](../CITATIONS.md).
+The adaptation also references the [GLORI 3.0 companion code](https://doi.org/10.5281/zenodo.14233421) and [GLORI 3.0 paper](https://doi.org/10.1038/s41592-025-02680-9). It is intended for single-end GLORI analysis against a small set of custom amplicons. See [source and license notices](../THIRD_PARTY_NOTICES.md) and [references](../README.md#citation-and-provenance).
 
 **No experimental data, synthetic example dataset, reference sequences or result tables are distributed.** Supply your own FASTQ and FASTA. `sample1` is only a placeholder output name.
 
@@ -53,7 +53,6 @@ glori-amplicon/
 ├── environment.yml
 ├── LICENSE
 ├── LICENSES/
-├── CITATIONS.md
 ├── THIRD_PARTY_NOTICES.md
 ├── prepare_amplicon_ref.py
 ├── run_GLORI_amplicon.py
@@ -336,9 +335,9 @@ When finished, run `exit` in the Slurm interactive shell to release resources. P
 
 ## 13. Citation, license and contributions
 
-Cite GLORI-tools, the original GLORI paper and the GLORI 3.0 paper/code record when that experimental method applies. Full entries are in [CITATIONS.md](../CITATIONS.md). This adaptation contributes amplicon support, compatibility and robustness fixes, dependencies and documentation; it does not claim invention of GLORI or endorsement by its authors.
+Cite GLORI-tools, the original GLORI paper and the GLORI 3.0 paper/code record when that experimental method applies. Full entries are in [README: Citation and provenance](../README.md#citation-and-provenance). This adaptation contributes amplicon support, compatibility and robustness fixes, dependencies and documentation; it does not claim invention of GLORI or endorsement by its authors.
 
-The upstream MIT copyright and license are retained in [LICENSE](../LICENSE). See [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md) for sources and changes. No paper PDF, figure, Zenodo companion script or study data is bundled.
+The original upstream MIT notices are retained in [LICENSES/](../LICENSES/); [LICENSE](../LICENSE) covers this adaptation's original contributions. See [THIRD_PARTY_NOTICES.md](../THIRD_PARTY_NOTICES.md) for sources and changes. No paper PDF, figure, Zenodo companion script or study data is bundled.
 
 For issue reports, include software versions, a command with private paths and data identifiers removed, the error text and failed step. Do not post confidential reads, reference sequences or credentials in a public issue.
 
